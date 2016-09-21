@@ -1,0 +1,196 @@
+
+1. Create Project
+(AWSTestEnvironment) Andriis-MacBook-Pro:aws_cli Andrii$ aws devicefarm create-project --name CLI_Created_Project
+{
+    "project": {
+        "name": "CLI_Created_Project",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00",
+        "created": 1467447627.175
+    }
+}
+
+1.1. List projects
+aws_cli Andrii$ aws devicefarm list-projects
+{
+    "projects": [
+        {
+            "name": "Trial Project 1",
+            "arn": "arn:aws:devicefarm:us-west-2:825405415122:project:1e19cbfd-dd4c-43a0-9db4-8f684c3256af",
+            "created": 1466090628.727
+        },
+        {
+            "name": "CLI_Created_Project",
+            "arn": "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00",
+            "created": 1467447627.175
+        }
+    ]
+}
+
+2. Create Upload (application)
+
+2.1. Create upload link
+aws devicefarm create-upload --project-arn "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00" --name "Reader_release_arm7_12536_default_test.apk" --type ANDROID_APP
+
+{
+    "upload": {
+        "status": "INITIALIZED",
+        "name": "Reader_release_arm7_12536_default_test.apk",
+        "created": 1467451434.864,
+        "url": "https://prod-us-west-2-uploads.s3-us-west-2.amazonaws.com/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aproject%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/uploads/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aupload%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660/Reader_release_arm7_12536_default_test.apk?AWSAccessKeyId=AKIAI3BDGZ5S7TQL2OZA&Expires=1467537834&Signature=jPhd0yo2BbfJFZHS8IurYneg2sQ%3D",
+        "type": "ANDROID_APP",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660"
+    }
+}
+
+2.2. Upload apk file
+curl -T /Users/Andrii/development/AurumSoft/AWS/AWSTestEnvironment/application/Reader_release_arm7_12536_default_test.apk "https://prod-us-west-2-uploads.s3-us-west-2.amazonaws.com/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aproject%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/uploads/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aupload%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660/Reader_release_arm7_12536_default_test.apk?AWSAccessKeyId=AKIAI3BDGZ5S7TQL2OZA&Expires=1467537834&Signature=jPhd0yo2BbfJFZHS8IurYneg2sQ%3D"
+
+3. Get upload status 
+aws devicefarm get-upload --arn "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660"
+{
+    "upload": {
+        "status": "SUCCEEDED",
+        "name": "Reader_release_arm7_12536_default_test.apk",
+        "created": 1467451434.864,
+        "type": "ANDROID_APP",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660",
+        "metadata": "{\"screens\": [\"small\", \"normal\", \"large\", \"xlarge\"], \"sdk_version\": \"8\", \"device_admin\": false, \"package_name\": \"com.obreey.reader\", \"native_code\": [\"armeabi-v7a\"], \"target_sdk_version\": \"14\", \"version_name\": \"1.22.12536.release\", \"version_code\": \"810122\", \"activity_name\": \"com.obreey.reader.StartActivity\"}"
+    }
+}
+
+
+4. Create upload (appium python test bundle)
+aws devicefarm create-upload --project-arn "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00" --name test_bundle.zip --type APPIUM_PYTHON_TEST_PACKAGE
+{
+    "upload": {
+        "status": "INITIALIZED",
+        "name": "test_bundle.zip",
+        "created": 1467450733.245,
+        "url": "https://prod-us-west-2-uploads.s3-us-west-2.amazonaws.com/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aproject%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/uploads/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aupload%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be/test_bundle.zip?AWSAccessKeyId=AKIAI3BDGZ5S7TQL2OZA&Expires=1467537133&Signature=9kp7usmgxcmHS3IWq%2BmWk2GlUNg%3D",
+        "type": "APPIUM_PYTHON_TEST_PACKAGE",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be"
+    }
+}
+
+curl -T /Users/Andrii/development/AurumSoft/AWS/AWSTestEnvironment/test_bundle.zip "https://prod-us-west-2-uploads.s3-us-west-2.amazonaws.com/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aproject%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/uploads/arn%3Aaws%3Adevicefarm%3Aus-west-2%3A825405415122%3Aupload%3Ab50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be/test_bundle.zip?AWSAccessKeyId=AKIAI3BDGZ5S7TQL2OZA&Expires=1467537133&Signature=9kp7usmgxcmHS3IWq%2BmWk2GlUNg%3D"
+
+aws devicefarm get-upload --arn "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be"
+{
+    "upload": {
+        "status": "SUCCEEDED",
+        "name": "test_bundle.zip",
+        "created": 1467450733.245,
+        "type": "APPIUM_PYTHON_TEST_PACKAGE",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be",
+        "metadata": "{\"valid\":true}"
+    }
+}
+
+5. Get devices list
+aws devicefarm list-devices > /Users/Andrii/development/AurumSoft/AWS/AWSTestEnvironment/AWS_info/Devices_list.txt
+
+
+6 Create devices pool
+aws devicefarm create-device-pool --project-arn "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00" --name ASUS_Nexus_7_2nd_Gen_WiFi_All --rules '[{"attribute":"ARN", "operator":"IN", "value":"[\"arn:aws:devicefarm:us-west-2::device:208FE7EE973042EA97DEC2EEF31CD10A\",\"arn:aws:devicefarm:us-west-2::device:0C6D4655FBDC49CFBD53C8B275DF2984\",\"arn:aws:devicefarm:us-west-2::device:F313651D65C949489B9F23F89CFD8E43\",\"arn:aws:devicefarm:us-west-2::device:03792BE5052244488251BD9350EE993A\"]"}]'
+
+{
+    "devicePool": {
+        "rules": [
+            {
+                "operator": "IN",
+                "attribute": "ARN",
+                "value": "[\"arn:aws:devicefarm:us-west-2::device:208FE7EE973042EA97DEC2EEF31CD10A\",\"arn:aws:devicefarm:us-west-2::device:0C6D4655FBDC49CFBD53C8B275DF2984\",\"arn:aws:devicefarm:us-west-2::device:F313651D65C949489B9F23F89CFD8E43\",\"arn:aws:devicefarm:us-west-2::device:03792BE5052244488251BD9350EE993A\"]"
+            }
+        ],
+        "name": "ASUS_Nexus_7_2nd_Gen_WiFi_All",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:devicepool:b50019bb-554c-4a9e-8e43-e06875aa5e00/581c792b-efe8-4a63-a01d-9372bb9807a1"
+    }
+}
+
+"arn:aws:devicefarm:us-west-2::device:208FE7EE973042EA97DEC2EEF31CD10A",
+"arn:aws:devicefarm:us-west-2::device:0C6D4655FBDC49CFBD53C8B275DF2984",
+"arn:aws:devicefarm:us-west-2::device:3CD2F68B280244E3B8E31001B6EFD8D5",
+"arn:aws:devicefarm:us-west-2::device:F313651D65C949489B9F23F89CFD8E43",
+"arn:aws:devicefarm:us-west-2::device:03792BE5052244488251BD9350EE993A"
+
+
+Device pool with single device
+aws devicefarm create-device-pool --project-arn "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00" --name ASUS_Nexus_7_2nd_Gen_WiFi_Single --rules '[{"attribute":"ARN", "operator":"IN", "value":"[\"arn:aws:devicefarm:us-west-2::device:03792BE5052244488251BD9350EE993A\"]"}]'
+{
+    "devicePool": {
+        "rules": [
+            {
+                "operator": "IN",
+                "attribute": "ARN",
+                "value": "[\"arn:aws:devicefarm:us-west-2::device:03792BE5052244488251BD9350EE993A\"]"
+            }
+        ],
+        "name": "ASUS_Nexus_7_2nd_Gen_WiFi_Single",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:devicepool:b50019bb-554c-4a9e-8e43-e06875aa5e00/b987ae42-8894-4b40-bdaf-3ca9475dd355"
+    }
+}
+
+
+7 Delete device pool
+aws devicefarm delete-device-pool --arn "arn:aws:devicefarm:us-west-2:825405415122:devicepool:b50019bb-554c-4a9e-8e43-e06875aa5e00/3781d3d3-7f9d-4f4c-bb5b-02dfb50b4413"
+
+8 
+aws devicefarm get-device-pool --arn "arn:aws:devicefarm:us-west-2:825405415122:devicepool:b50019bb-554c-4a9e-8e43-e06875aa5e00/b987ae42-8894-4b40-bdaf-3ca9475dd355"
+
+9 Schedule a run
+aws devicefarm schedule-run --project-arn "arn:aws:devicefarm:us-west-2:825405415122:project:b50019bb-554c-4a9e-8e43-e06875aa5e00" --app-arn "arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/f3797f10-f745-4f9b-9103-8ba90a4c7660" --device-pool-arn "arn:aws:devicefarm:us-west-2:825405415122:devicepool:b50019bb-554c-4a9e-8e43-e06875aa5e00/b987ae42-8894-4b40-bdaf-3ca9475dd355" --name firstCLIRun --test '{"type": "APPIUM_PYTHON","testPackageArn":"arn:aws:devicefarm:us-west-2:825405415122:upload:b50019bb-554c-4a9e-8e43-e06875aa5e00/da7b8b42-018b-4838-8f17-9153791ff1be"}'
+{
+    "run": {
+        "status": "SCHEDULING",
+        "name": "firstCLIRun",
+        "created": 1467457513.279,
+        "totalJobs": 1,
+        "completedJobs": 0,
+        "platform": "ANDROID_APP",
+        "result": "PENDING",
+        "billingMethod": "METERED",
+        "type": "APPIUM_PYTHON",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:run:b50019bb-554c-4a9e-8e43-e06875aa5e00/3db6f35c-f5e3-4d95-99ac-bc45aead51f3",
+        "counters": {
+            "skipped": 0,
+            "warned": 0,
+            "failed": 0,
+            "stopped": 0,
+            "passed": 0,
+            "errored": 0,
+            "total": 0
+        }
+    }
+}
+
+10 Check run status
+aws devicefarm get-run --arn "arn:aws:devicefarm:us-west-2:825405415122:run:b50019bb-554c-4a9e-8e43-e06875aa5e00/3db6f35c-f5e3-4d95-99ac-bc45aead51f3"
+{
+    "run": {
+        "status": "COMPLETED",
+        "name": "firstCLIRun",
+        "created": 1467457513.279,
+        "totalJobs": 1,
+        "completedJobs": 1,
+        "deviceMinutes": {
+            "unmetered": 0.0,
+            "total": 4.62,
+            "metered": 2.6
+        },
+        "platform": "ANDROID_APP",
+        "result": "PASSED",
+        "billingMethod": "METERED",
+        "type": "APPIUM_PYTHON",
+        "arn": "arn:aws:devicefarm:us-west-2:825405415122:run:b50019bb-554c-4a9e-8e43-e06875aa5e00/3db6f35c-f5e3-4d95-99ac-bc45aead51f3",
+        "counters": {
+            "skipped": 0,
+            "warned": 0,
+            "failed": 0,
+            "stopped": 0,
+            "passed": 3,
+            "errored": 0,
+            "total": 3
+        }
+    }
+}
+
